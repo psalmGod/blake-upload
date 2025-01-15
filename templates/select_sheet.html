@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Sheet</title>
+</head>
+<body>
+    <h1>Select a Sheet</h1>
+    <form action="/select-sheet" method="POST">
+        <input type="hidden" name="filename" value="{{ filename }}">
+        <label for="sheet">Choose a sheet:</label>
+        <select name="sheet" required>
+            {% for sheet in sheets %}
+                <option value="{{ sheet }}">{{ sheet }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Next</button>
+    </form>
+</body>
+</html>

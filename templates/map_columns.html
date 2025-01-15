@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map Columns</title>
+    <style>
+        /* Simple CSS spinner example */
+        .spinner-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255,255,255,0.8);
+            display: none; /* hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .spinner {
+            border: 10px solid #f3f3f3; /* Light grey */
+            border-top: 10px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0%   { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Map Columns to Twenty CRM Fields</h1>
+    <form action="/map-columns" method="POST" onsubmit="showSpinner()">
+        <input type="hidden" name="filename" value="{{ filename }}">
+        <input type="hidden" name="sheet" value="{{ sheet }}">
+
+        {% for field in ['First Name', 'Email', 'Location', 'Company', 'Phone Number', 'Job Title'] %}
+            <label for="{{ field }}">{{ field }}:</label>
+            <select name="{{ field.lower().replace(' ', '_') + '_column' }}" required>
+                {% for column in columns %}
+                    <option value="{{ column }}">{{ column }}</option>
+                {% endfor %}
+            </select><br>
+        {% endfor %}
+
+        <button type="submit">Upload</button>
+    </form>
+    
+    <!-- Spinner overlay -->
+    <div class="spinner-overlay" id="spinnerOverlay">
+        <div class="spinner"></div>
+    </div>
+    
+    <script>
+        function showSpinner() {
+            // Show the spinner overlay
+            document.getElementById('spinnerOverlay').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
