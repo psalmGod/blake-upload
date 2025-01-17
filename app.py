@@ -69,10 +69,13 @@ def map_columns():
     # Column mappings from the user
     column_mappings = {
         "First Name": request.form.get('first_name_column'),
+        "Last Name": request.form.get('last_name_column'),
         "Email": request.form.get('email_column'),
+        "City": request.form.get('city_column'),
         "Location": request.form.get('location_column'),
         "CompanyId": request.form.get('company_id_column'),
         "Job Title": request.form.get('job_title_column'),
+        "Phone Number": request.form.get('phone_number_column'),
     }
 
     filepath = os.path.join(UPLOAD_FOLDER, filename)
@@ -89,16 +92,22 @@ def map_columns():
     # Prepare the data for Twenty CRM
     people_data = []
     for _, row in df.iterrows():
-        # Extract first name only if the "First Name" column contains full names
+        # Extract first name and last name from the "Name" column
         full_name = row.get(column_mappings["First Name"], "")
         first_name = full_name.split()[0] if isinstance(full_name, str) and full_name else ""
+        last_name = " ".join(full_name.split()[1:]) if isinstance(full_name, str) and len(full_name.split()) > 1 else ""
 
         person = {
-            "name": {"firstName": first_name, "lastName": ""},
+            "name": {"firstName": first_name, "lastName": last_name},
             "emails": {"primaryEmail": row.get(column_mappings["Email"], "")},
             "jobTitle": row.get(column_mappings["Job Title"], ""),
-            "city": row.get(column_mappings["Location"], ""),
+            "city": row.get(column_mappings["City"], ""),
+            "address": row.get(column_mappings["Location"], ""),
             "companyId": row.get(column_mappings["CompanyId"], ""),
+            "firstName": {"firstName": first_name, "lastName": ""},
+            "lastName": {"firstName": "", "lastName": last_name},
+            "phones": {"primaryPhoneNumber": row.get(column_mappings["Phone Number"], "")}
+            
         }
 
         # Remove empty or null fields

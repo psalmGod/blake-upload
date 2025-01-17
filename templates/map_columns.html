@@ -38,7 +38,7 @@
         <input type="hidden" name="filename" value="{{ filename }}">
         <input type="hidden" name="sheet" value="{{ sheet }}">
 
-        {% for field in ['First Name', 'Email', 'Location', 'Company', 'Phone Number', 'Job Title'] %}
+        {% for field in ['First Name', 'Last Name', 'Email', 'City', 'Location', 'CompanyId', 'Job Title', 'Phone Number'] %}
             <label for="{{ field }}">{{ field }}:</label>
             <select name="{{ field.lower().replace(' ', '_') + '_column' }}" required>
                 {% for column in columns %}
