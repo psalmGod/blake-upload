@@ -139,4 +139,4 @@ def map_columns():
     return f"Successfully uploaded {successful_uploads} records to Twenty CRM. Skipped {len(duplicate_emails)} duplicate emails."
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
