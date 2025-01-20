@@ -9,7 +9,7 @@ UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # Replace with your actual API key
-TWENTY_CRM_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyYWExOTJmZC03MjkxLTRlMTktYWJjMy1jNjViOGM2ODc1MTciLCJ0eXBlIjoiQVBJX0tFWSIsIndvcmtzcGFjZUlkIjoiMmFhMTkyZmQtNzI5MS00ZTE5LWFiYzMtYzY1YjhjNjg3NTE3IiwiaWF0IjoxNzM2NDI5MTgzLCJleHAiOjQ4OTAwMjkxNzQsImp0aSI6IjliYzIwODg4LTViZDktNGI0NS1iOWRlLTk1NWE1Y2VmZDRjYSJ9.QPBN_sEppD1G4zxxPNCvF2Y_eny5QWr7ftxBKCtKcIQ"
+TWENTY_CRM_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmMzOTUyNC02YjE0LTQ4NWMtODdmNi0wYmM2YjU2MzlkODgiLCJ0eXBlIjoiQVBJX0tFWSIsIndvcmtzcGFjZUlkIjoiNjZjMzk1MjQtNmIxNC00ODVjLTg3ZjYtMGJjNmI1NjM5ZDg4IiwiaWF0IjoxNzM3MzMzOTYzLCJleHAiOjQ4OTA5MzM5NjIsImp0aSI6IjZjNTRmNGEyLWEyYjctNDNlNy1hOTI5LTNmZWVmMTY0ZGM0MCJ9.uLImnRd00mPmdlKPoAGLmQNFwuyHiNdykRYetdRV580"
 
 TWENTY_CRM_ENDPOINT = "https://api.twenty.com/rest/people"
 HEADERS = {
@@ -73,7 +73,7 @@ def map_columns():
         "Email": request.form.get('email_column'),
         "City": request.form.get('city_column'),
         "Location": request.form.get('location_column'),
-        "CompanyId": request.form.get('company_id_column'),
+        "Company": request.form.get('company_column'),
         "Job Title": request.form.get('job_title_column'),
         "Phone Number": request.form.get('phone_number_column'),
     }
@@ -102,12 +102,12 @@ def map_columns():
             "emails": {"primaryEmail": row.get(column_mappings["Email"], "")},
             "jobTitle": row.get(column_mappings["Job Title"], ""),
             "city": row.get(column_mappings["City"], ""),
-            "address": row.get(column_mappings["Location"], ""),
-            "companyId": row.get(column_mappings["CompanyId"], ""),
+            "addresses": row.get(column_mappings["Location"]),
+            "workplaces": row.get(column_mappings["Company"]),
             "firstName": {"firstName": first_name, "lastName": ""},
             "lastName": {"firstName": "", "lastName": last_name},
-            "phones": {"primaryPhoneNumber": row.get(column_mappings["Phone Number"], "")}
-            
+            "phones": {"primaryPhoneNumber": row.get(column_mappings["Phone Number"], "")},
+            #"customFields": {"address": row.get(column_mappings["Location"], ""),"workplace": row.get(column_mappings["Company"], ""),},
         }
 
         # Remove empty or null fields
